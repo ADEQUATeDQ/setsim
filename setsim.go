@@ -12,6 +12,21 @@ import (
 	"github.com/texttheater/golang-levenshtein/levenshtein"
 )
 
+// StringDistance is a helper function to Distance which accepts an array of strings
+func StringDistance(a, b []string) int {
+	bytesa := make([][]byte, len(a))
+	bytesb := make([][]byte, len(b))
+
+	for i := 0; i < len(a); i++ {
+		bytesa[i] = []byte(a[i])
+	}
+	for i := 0; i < len(b); i++ {
+		bytesb[i] = []byte(b[i])
+	}
+
+	return Distance(bytesa, bytesb)
+}
+
 // Distance is a measure for the structural difference of two byte sets
 // TODO: expand documentation
 func Distance(a, b [][]byte) int {
@@ -34,7 +49,7 @@ func Distance(a, b [][]byte) int {
 	sfd := SpearmanFootDistance(a, b)
 
 	var adiff int
-	for diff := range diffset {
+	for _, diff := range diffset {
 		adiff += sfd * diff
 	}
 	return adiff

@@ -3,12 +3,16 @@ package main
 import "github.com/the42/setsim"
 
 func main() {
-	var doc1 = [][]byte{
-		[]byte("Zeit"), []byte("Datum"), []byte("Temperatur"), /* []byte("Temperatur2",*/
+	var doc1 = []string{
+		"Date", "Time", "ZIP", "Address", "Reason",
 	}
-	var doc2 = [][]byte{
-		[]byte("Datum"), []byte("Zeit"), []byte("Temperatur"),
+	var doc2 = []string{
+		"Time", "Date", "ZIP", "Address", "Reason",
+	}
+	var doc3 = []string{
+		"Date1", "Time", "ZIP", "Address", "Reason",
 	}
 
-	println(setsim.Distance(doc1, doc2))
+	println(setsim.StringDistance(doc1, doc2))
+	println(setsim.StringDistance(doc1, doc3))
 }
