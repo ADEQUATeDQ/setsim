@@ -1,3 +1,8 @@
+// Copyright (c) Johann Höchtl 2016
+//
+// See LICENSE for License
+
+// Beginnings of a test to compare the similarity between two CSV-headers
 package main
 
 import "github.com/the42/setsim"
