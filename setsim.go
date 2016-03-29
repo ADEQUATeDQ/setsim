@@ -2,7 +2,8 @@
 // See LICENSE for license
 
 /*
-Package setsim TODO: Add package documentation
+Package setsim provides fuctionality to calculate the distance between two ordered
+lists. The items within the list are interpreted as bytes.
 */
 package setsim
 
@@ -27,8 +28,12 @@ func StringDistance(a, b []string) int {
 	return Distance(bytesa, bytesb)
 }
 
-// Distance is a measure for the structural difference of two byte sets
-// TODO: expand documentation
+// Distance is a measure for the structural difference of two byte lists, which
+// can be interpreted as strings. It first calculates the difference between two
+// set items using Levenshtein distance. This distance measures serves as a weight to multiply with
+// Spearman Foot Distance.
+//
+// For more information see http://theory.stanford.edu/~sergei/slides/www10-metrics.pdf
 func Distance(a, b [][]byte) int {
 	maxlen := max(len(a), len(b))
 	minlen := min(len(a), len(b))
@@ -58,8 +63,9 @@ func Distance(a, b [][]byte) int {
 // SpearmanFootDistance calculates the Spearman Footrule Distance of two byte arrays
 // When comparing two strings, you might consider normalizing these strings eg. http://unicode.org/faq/normalization.html
 // For more information see https://mikespivey.wordpress.com/2014/01/20/the-maximum-value-of-spearmans-footrule-distance/
+//
 // This function extends the classical definition of Spearman Footrule Distance in the sense that
-// if one element of set a is not contained within set b, this max(len a , len b ) to the Foot Distance
+// if one element of set a or set b is not contained within the other set, max(len a , len b ) is added to the Foot Distance.
 func SpearmanFootDistance(a, b [][]byte) int {
 	var odistance int
 	for i1, aval := range a {
