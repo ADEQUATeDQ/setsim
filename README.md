@@ -1,10 +1,12 @@
-Copyright (c) 2016 Johann Höchtl
+Setsim is a library to calculate the Similarity of two ordered Lists.
 
-[![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](http://godoc.org/github.com/the42/setsim)
+**Installation** `go get github.com/the42/setsim`  
+**Build status**  
+**Documentation** [![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](http://godoc.org/github.com/the42/setsim)
 
-For License see LICENSE
+Copyright (c) 2016 Johann Höchtl. For License see LICENSE
 
-A library to calculate the Similarity of two ordered Lists using a combination of
+This libray uses a combination of
 
 * [Spearmans Footrule Distance](http://perso.telecom-paristech.fr/~bloch/P6/IREC/Ranking/77_04_spearmans.pdf)
 * [Levenshtein Distance](https://en.wikipedia.org/wiki/Levenshtein_distance)
