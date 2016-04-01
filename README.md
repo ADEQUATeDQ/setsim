@@ -1,6 +1,6 @@
 Copyright (c) 2016 Johann Höchtl
 
-[![GoDoc](http://godoc.org/badge.png)](http://godoc.org/github.com/the42/setsim)
+[![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](http://godoc.org/github.com/the42/setsim)
 
 For License see LICENSE
 
