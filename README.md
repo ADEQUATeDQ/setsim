@@ -1,7 +1,7 @@
 Setsim is a library to calculate the Similarity of two ordered Lists.
 
 **Installation** `go get github.com/the42/setsim`  
-**Build status**  
+**Build status**  [![Build Status](https://travis-ci.org/the42/setsim.svg?branch=master)](https://travis-ci.org/the42/setsim)  
 **Documentation** [![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](http://godoc.org/github.com/the42/setsim)
 
 Copyright (c) 2016 Johann Höchtl. For License see LICENSE
