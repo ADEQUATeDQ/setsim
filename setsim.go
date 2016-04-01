@@ -13,25 +13,12 @@ import (
 	"github.com/texttheater/golang-levenshtein/levenshtein"
 )
 
-// StringDistance is a helper function to Distance which accepts an array of strings
-func StringDistance(a, b []string) int {
-	bytesa := make([][]byte, len(a))
-	bytesb := make([][]byte, len(b))
-
-	for i := 0; i < len(a); i++ {
-		bytesa[i] = []byte(a[i])
-	}
-	for i := 0; i < len(b); i++ {
-		bytesb[i] = []byte(b[i])
-	}
-
-	return Distance(bytesa, bytesb)
-}
-
 // Distance is a measure for the structural difference of two byte lists, which
 // can be interpreted as strings. It first calculates the difference between two
 // set items using Levenshtein distance. This distance measures serves as a weight to multiply with
 // Spearman Foot Distance.
+//
+// See also the documentation on SpearmanFootDistance concerning the normalization of strings.
 //
 // For more information see http://theory.stanford.edu/~sergei/slides/www10-metrics.pdf
 func Distance(a, b [][]byte) int {
@@ -60,10 +47,26 @@ func Distance(a, b [][]byte) int {
 	return adiff
 }
 
+// StringDistance is a helper function to Distance which accepts an array of strings. See the documentation on
+// SpearmanFootDistance concerning the normalization of strings.
+func StringDistance(a, b []string) int {
+	bytesa := make([][]byte, len(a))
+	bytesb := make([][]byte, len(b))
+
+	for i := 0; i < len(a); i++ {
+		bytesa[i] = []byte(a[i])
+	}
+	for i := 0; i < len(b); i++ {
+		bytesb[i] = []byte(b[i])
+	}
+
+	return Distance(bytesa, bytesb)
+}
+
 // SpearmanFootDistance calculates the Spearman Footrule Distance of two byte arrays
-// When comparing two strings, you might consider normalizing these strings eg. http://unicode.org/faq/normalization.html
 // For more information see https://mikespivey.wordpress.com/2014/01/20/the-maximum-value-of-spearmans-footrule-distance/
-//
+// When comparing two strings, you might consider normalizing these strings eg. http://unicode.org/faq/normalization.html
+
 // This function extends the classical definition of Spearman Footrule Distance in the sense that
 // if one element of set a or set b is not contained within the other set, max(len a , len b ) is added to the Foot Distance.
 func SpearmanFootDistance(a, b [][]byte) int {
