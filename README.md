@@ -1,5 +1,7 @@
 Copyright (c) 2016 Johann Höchtl
 
+[![GoDoc](http://godoc.org/badge.png)](http://godoc.org/github.com/the42/setsim)
+
 For License see LICENSE
 
 A library to calculate the Similarity of two ordered Lists using a combination of
