@@ -66,7 +66,6 @@ func StringDistance(a, b []string) int {
 // SpearmanFootDistance calculates the Spearman Footrule Distance of two byte arrays
 // For more information see https://mikespivey.wordpress.com/2014/01/20/the-maximum-value-of-spearmans-footrule-distance/
 // When comparing two strings, you might consider normalizing these strings eg. http://unicode.org/faq/normalization.html
-
 // This function extends the classical definition of Spearman Footrule Distance in the sense that
 // if one element of set a or set b is not contained within the other set, max(len a , len b ) is added to the Foot Distance.
 func SpearmanFootDistance(a, b [][]byte) int {
