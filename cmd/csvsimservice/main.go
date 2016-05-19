@@ -18,8 +18,6 @@ import (
 
 // CSVPairCompareRequest document
 type CSVPairCompareRequest struct {
-	Comma    *string
-	Comment  *string
 	Baseline *string
 	Compare  *string
 }
@@ -45,12 +43,12 @@ func compareCSVHeader(request *restful.Request, response *restful.Response) {
 	basereader := csv.NewReader(strings.NewReader(*csvset.Baseline))
 	comparereader := csv.NewReader(strings.NewReader(*csvset.Compare))
 
-	if comma := csvset.Comma; comma != nil {
-		basereader.Comma = rune((*comma)[0])
+	if comma := request.QueryParameter("comma"); len(comma) != 0 {
+		basereader.Comma = rune(comma[0])
 		comparereader.Comma = basereader.Comma
 	}
-	if comment := csvset.Comment; comment != nil {
-		basereader.Comment = rune((*comment)[0])
+	if comment := request.QueryParameter("comment"); len(comment) != 0 {
+		basereader.Comment = rune(comment[0])
 		comparereader.Comment = basereader.Comment
 	}
 
@@ -90,7 +88,17 @@ func main() {
 		Produces(restful.MIME_JSON).
 		Consumes(restful.MIME_JSON)
 
-	ws.Route(ws.PUT("/compare").To(compareCSVHeader))
+	ws.Route(ws.PUT("/compare").
+		To(compareCSVHeader).
+		Param(ws.QueryParameter("comma", "separator character").
+			DefaultValue(",").
+			Required(false).
+			DataType("string")).
+		Param(ws.QueryParameter("comment", "comment character").
+			DefaultValue("").
+			Required(false).
+			DataType("string")).
+		Writes(CSVPairCompareResponse{}))
 	restful.Add(ws)
 
 	port := os.Getenv("PORT")
