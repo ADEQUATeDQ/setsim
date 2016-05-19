@@ -1,2 +1,2 @@
-FROM golang:1.6-onbuild
+FROM golang:onbuild
 EXPOSE 5000

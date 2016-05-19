@@ -25,7 +25,9 @@ type CSVPairCompareRequest struct {
 // CSVPairCompareResponse document
 type CSVPairCompareResponse struct {
 	CSVPairCompareRequest
-	CompareResult []int `json:"compareResult"`
+	Response struct {
+		CompareResult []int
+	}
 }
 
 func compareCSVHeader(request *restful.Request, response *restful.Response) {
@@ -69,7 +71,7 @@ func compareCSVHeader(request *restful.Request, response *restful.Response) {
 			log.Fatal(err)
 		}
 
-		result.CompareResult = append(result.CompareResult, setsim.StringDistance(baserecords[0], comparerecords[0]))
+		result.Response.CompareResult = append(result.Response.CompareResult, setsim.StringDistance(baserecords[0], comparerecords[0]))
 	}
 	response.WriteAsJson(result)
 }
