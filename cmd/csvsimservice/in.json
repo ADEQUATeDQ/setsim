@@ -1,4 +1,4 @@
 {
     "Baseline": "ZIP;Address;Block",
-    "Compare": "ZIP;Address;Block"
+    "Compare": ["ZIP;Address;Block", "ZIP1;Address;Block"]
 }

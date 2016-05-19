@@ -19,7 +19,7 @@ import (
 // CSVPairCompareRequest document
 type CSVPairCompareRequest struct {
 	Baseline *string
-	Compare  *string
+	Compare  []string
 }
 
 // CSVPairCompareResponse document
@@ -41,15 +41,12 @@ func compareCSVHeader(request *restful.Request, response *restful.Response) {
 	}
 
 	basereader := csv.NewReader(strings.NewReader(*csvset.Baseline))
-	comparereader := csv.NewReader(strings.NewReader(*csvset.Compare))
 
 	if comma := request.QueryParameter("comma"); len(comma) != 0 {
 		basereader.Comma = rune(comma[0])
-		comparereader.Comma = basereader.Comma
 	}
 	if comment := request.QueryParameter("comment"); len(comment) != 0 {
 		basereader.Comment = rune(comment[0])
-		comparereader.Comment = basereader.Comment
 	}
 
 	baserecords, err := basereader.ReadAll()
@@ -58,22 +55,21 @@ func compareCSVHeader(request *restful.Request, response *restful.Response) {
 		return
 	}
 	if len(baserecords) == 0 {
-		logresponse(response, http.StatusInternalServerError, err.Error())
-		return
-	}
-
-	comparerecords, err := comparereader.ReadAll()
-	if err != nil {
-		log.Fatal(err)
-	}
-	if len(comparerecords) == 0 {
 		logresponse(response, http.StatusInternalServerError, "no baseline header")
 		return
 	}
 
 	result := CSVPairCompareResponse{CSVPairCompareRequest: csvset}
-	for _, val := range comparerecords {
-		result.CompareResult = append(result.CompareResult, setsim.StringDistance(baserecords[0], val))
+	for _, val := range csvset.Compare {
+		comparereader := csv.NewReader(strings.NewReader(val))
+		comparereader.Comma = basereader.Comma
+		comparereader.Comment = basereader.Comment
+		comparerecords, err := comparereader.ReadAll()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		result.CompareResult = append(result.CompareResult, setsim.StringDistance(baserecords[0], comparerecords[0]))
 	}
 	response.WriteAsJson(result)
 }
@@ -90,15 +86,20 @@ func main() {
 
 	ws.Route(ws.PUT("/compare").
 		To(compareCSVHeader).
-		Param(ws.QueryParameter("comma", "separator character").
+		Produces(restful.MIME_JSON).
+		Consumes(restful.MIME_JSON).
+		Param(ws.QueryParameter("comma", "CSV field separator character").
 			DefaultValue(",").
 			Required(false).
 			DataType("string")).
-		Param(ws.QueryParameter("comment", "comment character").
+		Param(ws.QueryParameter("comment", "CSV comment character").
 			DefaultValue("").
 			Required(false).
 			DataType("string")).
-		Writes(CSVPairCompareResponse{}))
+		Reads(CSVPairCompareRequest{}).
+		Returns(http.StatusOK, "", CSVPairCompareResponse{}).
+		Returns(http.StatusInternalServerError, "", nil).
+		Returns(http.StatusBadRequest, "", nil))
 	restful.Add(ws)
 
 	port := os.Getenv("PORT")
