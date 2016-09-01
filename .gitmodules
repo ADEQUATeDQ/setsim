@@ -1,0 +1,3 @@
+[submodule "cmd/csvsimservice/swagger-ui"]
+	path = cmd/csvsimservice/swagger-ui
+	url = https://github.com/the42/swagger-ui.git
