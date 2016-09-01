@@ -13,20 +13,21 @@ import (
 	"strings"
 
 	"github.com/emicklei/go-restful"
+	"github.com/emicklei/go-restful/swagger"
 	"github.com/the42/setsim"
 )
 
 // CSVPairCompareRequest document
 type CSVPairCompareRequest struct {
-	Baseline *string
-	Compare  []string
+	Baseline *string  `description:"The CSV header the other headers should be compared to"`
+	Compare  []string `description:"The CSV headers which are all compared against Baseline"`
 }
 
 // CSVPairCompareResponse document
 type CSVPairCompareResponse struct {
-	CSVPairCompareRequest
-	Response struct {
-		CompareResult []int
+	CSVPairCompareRequest `description:"verbatim copy of request struct"`
+	Response              struct {
+		CompareResult []int `description:"Contains for every CSV header in CSVPairCompareRequest.Compare the comparison result"`
 	}
 }
 
@@ -108,6 +109,14 @@ func main() {
 	if port == "" {
 		port = "5000"
 	}
+
+	config := swagger.Config{
+		WebServices:     restful.DefaultContainer.RegisteredWebServices(),
+		WebServicesUrl:  "http://localhost",
+		ApiPath:         "/apidocs.json",
+		SwaggerPath:     "/apidocs/",
+		SwaggerFilePath: "./swagger-ui/dist"}
+	swagger.RegisterSwaggerService(config, restful.DefaultContainer)
 
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
