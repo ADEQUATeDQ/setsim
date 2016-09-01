@@ -1,0 +1,29 @@
+{
+	"ImportPath": "github.com/the42/setsim",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v74",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/emicklei/go-restful",
+			"Comment": "v1.2-83-gc57f862",
+			"Rev": "c57f862b383b4330671d6b4bf932386c35bd57f8"
+		},
+		{
+			"ImportPath": "github.com/emicklei/go-restful/log",
+			"Comment": "v1.2-83-gc57f862",
+			"Rev": "c57f862b383b4330671d6b4bf932386c35bd57f8"
+		},
+		{
+			"ImportPath": "github.com/emicklei/go-restful/swagger",
+			"Comment": "v1.2-83-gc57f862",
+			"Rev": "c57f862b383b4330671d6b4bf932386c35bd57f8"
+		},
+		{
+			"ImportPath": "github.com/texttheater/golang-levenshtein/levenshtein",
+			"Rev": "1298e830a5c134c6830b6d472b7b81faa9492c0a"
+		}
+	]
+}
