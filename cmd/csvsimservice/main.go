@@ -1,4 +1,6 @@
-package main // Copyright (c) Johann Höchtl 2016
+package main
+
+// Copyright (c) Johann Höchtl 2016
 //
 // See LICENSE for License
 
