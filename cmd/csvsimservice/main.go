@@ -127,13 +127,14 @@ func main() {
 		port = "5000"
 	}
 
+	hostname := os.Getenv("HOSTNAME")
+
 	config := swagger.Config{
 		WebServices:     restful.DefaultContainer.RegisteredWebServices(),
-		WebServicesUrl:  "http://localhost",
-		ApiPath:         "/apidocs.json",
-		SwaggerPath:     "/apidocs/",
+		ApiPath:         "/apidocs/apidocs.json",
+		SwaggerPath:     "/swagger/",
 		SwaggerFilePath: "./swagger-ui/dist"}
 	swagger.RegisterSwaggerService(config, restful.DefaultContainer)
 
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	log.Fatal(http.ListenAndServe(hostname+":"+port, nil))
 }
