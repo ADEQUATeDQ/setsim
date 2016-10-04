@@ -89,6 +89,21 @@ func main() {
 		Produces(restful.MIME_JSON).
 		Consumes(restful.MIME_JSON)
 
+	//BEGIN: CORS support
+	/*
+		cors := restful.CrossOriginResourceSharing{
+			ExposeHeaders:  []string{"X-My-Header"},
+			AllowedHeaders: []string{"Content-Type", "Accept"},
+			AllowedMethods: []string{"GET", "POST", "PUT"},
+			CookiesAllowed: false,
+			Container:      restful.DefaultContainer}
+
+		restful.DefaultContainer.Filter(cors.Filter)
+		// Add container filter to respond to OPTIONS
+		restful.DefaultContainer.Filter(restful.DefaultContainer.OPTIONSFilter)
+	*/
+	//END: CORS support
+
 	ws.Route(ws.PUT("/compare").
 		To(compareCSVHeader).
 		Produces(restful.MIME_JSON).
