@@ -1,0 +1,7 @@
+language: go
+go:
+ - 1.6
+ - tip
+install:
+ - go get -v .
+ - go get github.com/emicklei/go-restful
